@@ -20,9 +20,11 @@ function App() {
           </>
         )}
       /> */}
-      <Header />
-      <Routess />
-      <Footer />
+      
+        <Header />
+        <Routess />
+        <Footer />
+      
     </BrowserRouter>
   );
 }
