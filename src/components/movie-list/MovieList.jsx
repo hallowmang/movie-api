@@ -19,7 +19,27 @@ const MovieList = (props) => {
       let response = null;
       const params = {};
 
-      if (props.type !== "similar") {
+      // if (props.type !== "similar") {
+      //   switch (props.category) {
+      //     case category.movie:
+          
+      //       let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiConfig.apiKey}&language=en-US&page=movie`
+      //       let response = await fetch(url)
+      //       let data = await response.json()
+      //       console.log(data.results,'movie')
+      //       setItems(data.results)
+      //       return
+
+          
+      //     default:
+      //       response = await tmdbApi.getMoviesList(props.type, { params });
+      //   }
+      // } else {
+      //   response = await tmdbApi.similar(props.category, props.id);
+      // }
+      // setItems(response.results);
+
+        if (props.type !== "similar") {
         switch (props.category) {
           case category.movie:
             response = await tmdbApi.getMoviesList(props.type, { params });
@@ -32,7 +52,12 @@ const MovieList = (props) => {
       }
       setItems(response.results);
     };
+    
     getList();
+
+    
+    
+    // getList();
   }, []);
 
   return (
@@ -40,6 +65,7 @@ const MovieList = (props) => {
       <Swiper grabCursor={true} spaceBetween={10} slidesPerView={"auto"}>
         {items.map((item, i) => (
           <SwiperSlide key={i}>
+            {/* {console.log(item,i)} */}
             <img src={apiConfig.w500Image(item.poster_path)} alt="" />
           </SwiperSlide>
         ))}

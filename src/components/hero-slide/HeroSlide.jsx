@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Button, { OutlineButton } from "../button/Button";
 import Modal, { ModalContent } from "../modal/Modal";
 
-import tmdbApi, { category, movieType } from "../../api/tmdbApi";
+import tmdbApi, { category, movieType, tvType } from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
 import "./hero-slide.scss";
@@ -17,25 +17,49 @@ const HeroSlide = () => {
   SwiperCore.use([Autoplay]);
 
   const [movieItems, setMovieItems] = useState([]);
+  // const [tvItems, setTvItems] = useState([]);
 
-  useEffect(() => {
-    const getMovies = async () => {
-      const { params } = { params: 1 };
+  // const  params  = useParams();
+  // console.log(params,'?????')
 
-      try {
-        const response = tmdbApi.getMoviesList(movieType.popular, {
-          params,
-        });
-
-        // setMovieItems(response.results.slice(1, 4));
-      } catch {
-        console.log("error");
+    useEffect(() => {
+      const getMovies = async () => {
+          try {
+              const response = await tmdbApi.getMoviesList(movieType.popular, {params:{page:1}});
+              // console.log(response);
+              setMovieItems(response.results.slice(0, 10));
+          } catch {
+              console.log('error');
+          }
       }
-      /* var tt = await axios.get('https://api.themoviedb.org/3/movie/550/?api_key=f89a6c1f22aca3858a4ae7aef10de967');
-      console.log(tt.data) */
-    };
-    getMovies();
+      getMovies();
+
+    //   const getTV = async () => {
+    //     try {          
+    //         const response = await tmdbApi.getTvList(tvType.popular, {params:{page:1}});
+    //         console.log(response);
+    //         setTvItems(response.results.slice(0, 10));
+    //         // console.log(tvItems,"as;dlikkkk")
+    //     } catch {
+    //         console.log('error');
+    //     }
+    // }
+    // getTV();
   }, []);
+
+  // useEffect(() => {
+  //   const getMovies = async () => {
+  //     // console.log(apiConfig.apiKey)
+
+  //     let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiConfig.apiKey}&language=en-US&page=1`
+  //     let response = await fetch(url)
+  //     let data = await response.json()
+  //     console.log(data.results)
+  //     console.log(data.results.slice(1, 4), '???')
+  //     setMovieItems(data.results.slice(1, 4))
+  //   }
+  //   getMovies();
+  // }, []);
 
   return (
     <div className="hero-slide">
