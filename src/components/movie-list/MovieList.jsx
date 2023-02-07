@@ -11,6 +11,8 @@ import Button from "../button/Button";
 import tmdbApi, { category } from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
+import MovieCard from "../movie-card/MovieCard";
+
 const MovieList = (props) => {
   const [items, setItems] = useState([]);
 
@@ -45,7 +47,7 @@ const MovieList = (props) => {
             response = await tmdbApi.getMoviesList(props.type, { params });
             break;
           default:
-            response = await tmdbApi.getMoviesList(props.type, { params });
+            response = await tmdbApi.getTvList(props.type, { params });
         }
       } else {
         response = await tmdbApi.similar(props.category, props.id);
@@ -55,9 +57,6 @@ const MovieList = (props) => {
     
     getList();
 
-    
-    
-    // getList();
   }, []);
 
   return (
@@ -66,7 +65,8 @@ const MovieList = (props) => {
         {items.map((item, i) => (
           <SwiperSlide key={i}>
             {/* {console.log(item,i)} */}
-            <img src={apiConfig.w500Image(item.poster_path)} alt="" />
+            {/* <img src={apiConfig.w500Image(item.poster_path)} alt="" /> */}
+            <MovieCard item={item} category={props.category} />
           </SwiperSlide>
         ))}
       </Swiper>

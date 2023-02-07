@@ -17,7 +17,6 @@ const HeroSlide = () => {
   SwiperCore.use([Autoplay]);
 
   const [movieItems, setMovieItems] = useState([]);
-  // const [tvItems, setTvItems] = useState([]);
 
   // const  params  = useParams();
   // console.log(params,'?????')
@@ -47,6 +46,7 @@ const HeroSlide = () => {
     // getTV();
   }, []);
 
+
   // useEffect(() => {
   //   const getMovies = async () => {
   //     // console.log(apiConfig.apiKey)
@@ -60,6 +60,10 @@ const HeroSlide = () => {
   //   }
   //   getMovies();
   // }, []);
+
+  useEffect(()=>{
+    
+  },[])
 
   return (
     <div className="hero-slide">
@@ -84,10 +88,6 @@ const HeroSlide = () => {
       {movieItems.map((item, i) => (
         <TrailerModal key={i} item={item} />
       ))}
-
-      {/* {movieItems.map((item, i) => (
-        <TrailerModal key={i} item={item} />
-      ))} */}
     </div>
   );
 };
