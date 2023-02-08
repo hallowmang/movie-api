@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./footer.scss"
+import "./footer.scss";
 
-import "boxicons"
+// import "boxicons"
 
 import { Link } from "react-router-dom";
 
@@ -41,7 +41,6 @@ const Footer = () => {
       </div>
     </div>
   );
-
 };
 
 export default Footer;
