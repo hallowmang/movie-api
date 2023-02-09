@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Button, { OutlineButton } from "../button/Button";
 import Modal, { ModalContent } from "../modal/Modal";
 
-import tmdbApi, { category, movieType, tvType } from "../../api/tmdbApi";
+import tmdbApi, { category, movieType } from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
 import "./hero-slide.scss";
