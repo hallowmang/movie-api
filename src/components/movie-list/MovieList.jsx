@@ -13,35 +13,16 @@ import tmdbApi, { category } from "../../api/tmdbApi";
 
 import MovieCard from "../movie-card/MovieCard";
 
-const MovieList = (props) => {
-  const [items, setItems] = useState([]);
+const MovieList = props => {
 
+  const [items, setItems] = useState([]);
+  
   useEffect(() => {
     const getList = async () => {
       let response = null;
       const params = {};
 
-      // if (props.type !== "similar") {
-      //   switch (props.category) {
-      //     case category.movie:
-          
-      //       let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiConfig.apiKey}&language=en-US&page=movie`
-      //       let response = await fetch(url)
-      //       let data = await response.json()
-      //       console.log(data.results,'movie')
-      //       setItems(data.results)
-      //       return
-
-          
-      //     default:
-      //       response = await tmdbApi.getMoviesList(props.type, { params });
-      //   }
-      // } else {
-      //   response = await tmdbApi.similar(props.category, props.id);
-      // }
-      // setItems(response.results);
-
-        if (props.type !== "similar") {
+      if (props.type !== 'similar') {
         switch (props.category) {
           case category.movie:
             response = await tmdbApi.getMoviesList(props.type, { params });
@@ -53,24 +34,29 @@ const MovieList = (props) => {
         response = await tmdbApi.similar(props.category, props.id);
       }
       setItems(response.results);
-    };
+    }
     getList();
   }, []);
 
   return (
     <div className="movie-list">
-      <Swiper grabCursor={true} spaceBetween={10} slidesPerView={"auto"}>
-        {items.map((item, i) => (
-          <SwiperSlide key={i}>
-            {/* {console.log(item,i)} */}
-            {/* <img src={apiConfig.w500Image(item.poster_path)} alt="" /> */}
-            <MovieCard item={item} category={props.category} />
-          </SwiperSlide>
-        ))}
+      <Swiper
+        grabCursor={true}
+        spaceBetween={10}
+        slidesPerView={'auto'}
+      >
+        {
+          items.map((item, i) => (
+            <SwiperSlide key={i}>
+              <MovieCard item={item} category={props.category} />
+            </SwiperSlide>
+          ))
+        }
       </Swiper>
     </div>
   );
-};
+}
+
 
 MovieList.propTypes = {
   category: PropTypes.string.isRequired,

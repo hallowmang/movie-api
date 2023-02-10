@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import SwiperCore, { Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Button, { OutlineButton } from "../button/Button";
-import Modal, { ModalContent } from "../modal/Modal";
+import { Modal as M, ModalContent } from "../modal/Modal";
 
 import tmdbApi, { category, movieType } from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
 import "./hero-slide.scss";
-import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+
+
 
 const HeroSlide = () => {
   SwiperCore.use([Autoplay]);
@@ -21,17 +22,18 @@ const HeroSlide = () => {
   // const  params  = useParams();
   // console.log(params,'?????')
 
-    useEffect(() => {
-      const getMovies = async () => {
-          try {
-              const response = await tmdbApi.getMoviesList(movieType.popular, {params:{page:1}});
-              // console.log(response);
-              setMovieItems(response.results.slice(0, 10));
-          } catch {
-              console.log('error');
-          }
+  useEffect(() => {
+    const getMovies = async () => {
+      const params = { page: 1 }
+      try {
+        const response = await tmdbApi.getMoviesList(movieType.popular, { params });
+        // console.log(response);
+        setMovieItems(response.results.slice(0, 10));
+      } catch {
+        console.log('error');
       }
-      getMovies();
+    }
+    getMovies();
 
     //   const getTV = async () => {
     //     try {          
@@ -61,10 +63,6 @@ const HeroSlide = () => {
   //   getMovies();
   // }, []);
 
-  useEffect(()=>{
-    
-  },[])
-
   return (
     <div className="hero-slide">
       <Swiper
@@ -92,8 +90,9 @@ const HeroSlide = () => {
   );
 };
 
-const HeroSlideItem = (props) => {
-  let navigate = useNavigate();
+const HeroSlideItem = props => {
+
+  let navigate = useNavigate(false);
 
   const item = props.item;
 
@@ -102,22 +101,21 @@ const HeroSlideItem = (props) => {
   );
 
   const setModalActive = async () => {
+
+
     const modal = document.querySelector(`#modal_${item.id}`);
 
     const videos = await tmdbApi.getVideos(category.movie, item.id);
 
     if (videos.results.length > 0) {
-      const videSrc = "https://youtube.com/embed/" + videos.results[0].key;
-      modal
-        .querySelector(".modal__content > iframe")
-        .setAttribute("src", videSrc);
+      const videSrc = 'https://www.youtube.com/embed/' + videos.results[0].key;
+      modal.querySelector('.modal__content > iframe').setAttribute('src', videSrc);
     } else {
-      modal.querySelector(".modal__content").innerHTML = "No trailer";
+      modal.querySelector('.modal__content').innerHTML = 'No trailer';
     }
 
-    modal.classList.toggle("active");
-  };
-
+    modal.classList.toggle('active');
+  }
   return (
     <div
       className={`hero-slide__item ${props.className}`}
@@ -127,22 +125,22 @@ const HeroSlideItem = (props) => {
         <div className="hero-slide__item__content__info">
           <h2 className="title">{item.title}</h2>
           <div className="overview">{item.overview}</div>
-          <div className="btns">
-            <Button onClick={() => navigate("/movie/" + item.id)}>
-              Watch now
-            </Button>
-            <OutlineButton
-              onClick={setModalActive /* () => console.log("trailer") */}
-            >
-              Watch trailer
-            </OutlineButton>
-          </div>
+            <div className="btns">
+              <Button onClick={() => navigate("/movie/" + item.id)}>
+                Watch now
+              </Button>
+              <OutlineButton
+                onClick={setModalActive}
+              >
+                Watch trailer
+              </OutlineButton>
+            </div>
         </div>
         <div className="hero-slide__item__content__poster">
           <img src={apiConfig.w500Image(item.poster_path)} alt="" />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
@@ -154,7 +152,7 @@ const TrailerModal = (props) => {
   const onClose = () => iframeRef.current.setAttribute("src", "");
 
   return (
-    <Modal active={false} id={`modal_${item.id}`}>
+    <M active={false} id={`modal_${item.id}`}>
       <ModalContent onClose={onClose}>
         <iframe
           ref={iframeRef}
@@ -163,7 +161,7 @@ const TrailerModal = (props) => {
           title="trailer"
         ></iframe>
       </ModalContent>
-    </Modal>
+    </M>
   );
 };
 

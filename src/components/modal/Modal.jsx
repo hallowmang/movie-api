@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 import "./modal.scss";
+import "boxicons"
 
-const Modal = (props) => {
+export const Modal = (props) => {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -11,37 +12,36 @@ const Modal = (props) => {
   }, [props.active]);
 
   return (
-    <div id={props.id} className={`modal ${active ? "active" : ""}`}>
+    <div id={props.id} className={`modal ${active ? 'active' : ''}`}>
       {props.children}
     </div>
   );
-};
+}
 
 Modal.propTypes = {
   active: PropTypes.bool,
-  id: PropTypes.string,
-};
+  id: PropTypes.string
+}
 
-export const ModalContent = (props) => {
+export const ModalContent = props => {
+
   const contentRef = useRef(null);
 
   const closeModal = () => {
-    contentRef.current.parentNode.classList.remove("active");
+    contentRef.current.parentNode.classList.remove('active');
     if (props.onClose) props.onClose();
-  };
+  }
 
   return (
     <div ref={contentRef} className="modal__content">
       {props.children}
       <div className="modal__content__close" onClick={closeModal}>
-        <i className="bx bx-x"></i>
+        <box-icon name='x' color = "white"></box-icon>
       </div>
     </div>
-  );
-};
+  )
+}
 
 ModalContent.propTypes = {
-  onClose: PropTypes.func,
-};
-
-export default Modal;
+  onClose: PropTypes.func
+}

@@ -15,6 +15,12 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-icon{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
   }
 
   &::before {
@@ -36,7 +42,7 @@
     }
 
     &:hover .btn {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.7);
     }
   }
 }
